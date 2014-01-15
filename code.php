@@ -1,9 +1,9 @@
 <?php
 /**
  * DokuWiki plugin for Piwik
- * 
+ *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Heikki Hokkanen <hoxu@users.sf.net>
+ * @author     Heikki Hokkanen <hoxu@users.sf.net> & Maxime Morel <maxime.morel69@gmail.com>
  */
 require_once(DOKU_INC .'inc/auth.php');
 
@@ -23,12 +23,12 @@ function piwik_code_new()
 	if (isset($conf['plugin']['piwik']['piwik_idsite'])) {
 		// Config does not contain keys if they are default;
 		// so check whether they are set & to non-default value
-		
+
 		// default 0, so check if it's not set or 0
 		if (!isset($conf['plugin']['piwik']['count_admins']) || $conf['plugin']['piwik']['count_admins'] == 0) {
 			if (isset($_SERVER['REMOTE_USER']) && auth_isadmin()) { return; }
 		}
-		
+
 		// default 1, so check if it's set and 0
 		if (isset($conf['plugin']['piwik']['count_users']) && $conf['plugin']['piwik']['count_users'] == 0) {
 			if (isset($_SERVER['REMOTE_USER'])) { return; }
@@ -41,15 +41,17 @@ function piwik_code_new()
 
 		ptln(
 '<script type="text/javascript">
-var pkBaseURL = (("https:" == document.location.protocol) ? "https://'. $piwik_url .'" : "http://'. $piwik_url .'");
-document.write(unescape("%3Cscript src=\'" + pkBaseURL + "piwik.js\' type=\'text/javascript\'%3E%3C/script%3E"));
-</script><script type="text/javascript">
-try {
-var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", '. $idsite .');
-piwikTracker.trackPageView();
-piwikTracker.enableLinkTracking();
-} catch( err ) {}
-</script><noscript><p><img src="http://'. $piwik_url .'piwik.php?idsite='. $idsite .'" style="border:0" alt=""/></p></noscript>
+  var _paq = _paq || [];
+  _paq.push(["trackPageView"]);
+  _paq.push(["enableLinkTracking"]);
+  (function() {
+    var u=(("https:" == document.location.protocol) ? "https" : "http") + "'.$piwik_url.'";
+    _paq.push(["setTrackerUrl", u+"piwik.php"]);
+    _paq.push(["setSiteId", "'.$idsite.'"]);
+    var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+    g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+  })();
+</script>
 ');
 	} else {
 		// Show configuration tip for admin

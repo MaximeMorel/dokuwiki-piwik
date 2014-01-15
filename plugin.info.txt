@@ -1,7 +1,7 @@
 base piwik
-author Heikki Hokkanen
-email hoxu@users.sf.net
-date 2012-01-27
-name DokuWiki plugin for Piwik
+author Heikki Hokkanen & Maxime Morel
+email hoxu@users.sf.net & maxime.morel69@gmail.com
+date 2014-01-15
+name DokuWiki plugin for Piwik updated by Maxime Morel
 desc Plugin for Piwik, the open source Google Analytics alternative
 url https://gitorious.org/dokuwiki-piwik/dokuwiki-piwik
